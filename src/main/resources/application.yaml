@@ -6,6 +6,12 @@ logging:
 spring:
   data:
     mongodb:
-      database: "boot_reactive_todo"
+      database: boot_reactive_todo
       port: 27017
       host: localhost
+management:
+  endpoints:
+    enabled-by-default: true
+    web:
+      exposure:
+        include: '*'

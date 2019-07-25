@@ -4,7 +4,6 @@ package com.melardev.spring.rxmongcrud.seeds;
 import com.github.javafaker.Faker;
 import com.melardev.spring.rxmongcrud.entities.Todo;
 import com.melardev.spring.rxmongcrud.repositories.TodosRepository;
-import com.mongodb.BasicDBObject;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.stereotype.Component;
@@ -53,9 +52,12 @@ public class DbSeeder implements CommandLineRunner {
                 })
                 .collect(toSet());
 
-        Flux<Todo> a = this.todosRepository.saveAll(todos);
-        a.subscribe();
-        System.out.println("[+] " + maxItemsToSeed + " todos seeded");
+        Flux<Todo> todoFlux = this.todosRepository.saveAll(todos);
+        todoFlux.subscribe();
+
+        // System.out.println(todoFlux.count().block());
+        System.out.println("[+] " + (maxItemsToSeed - currentTodosInDb) + " todos seeded");
+
     }
 
 }

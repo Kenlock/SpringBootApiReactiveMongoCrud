@@ -26,7 +26,6 @@ public class TodosController {
         return todosRepository.findAllHqlSummary();
     }
 
-
     @GetMapping("/pending")
     public Flux<Todo> getPending() {
         return todosRepository.findByCompletedFalse();
@@ -39,7 +38,7 @@ public class TodosController {
     }
 
     @GetMapping("/{id}")
-    public Mono<ResponseEntity<Object>> get(@PathVariable("id") String id) {
+    public Mono<ResponseEntity<Object>> getById(@PathVariable("id") String id) {
         return this.todosRepository.findById(id)
                 .map(ResponseEntity::ok)
                 .defaultIfEmpty(new ResponseEntity(new ErrorResponse("Todo not found"), HttpStatus.NOT_FOUND));
